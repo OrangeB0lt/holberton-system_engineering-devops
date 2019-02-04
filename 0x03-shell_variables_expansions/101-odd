@@ -1,2 +1,2 @@
 #!/bin/bash
-paster -d " " -- |tr " " "\t" |cut -f 1
+paster -d " " - - |tr " " "\t" |cut -f 1
