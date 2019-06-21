@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Until loop for "Holberton School"
+i=0
+until [ $i -gt 9 ];
+do
+	echo "Holberton School"
+	(( i++ ))
+done
