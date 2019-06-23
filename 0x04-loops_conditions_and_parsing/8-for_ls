@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# displays directory contents in a list form
+for i in $(find ./* | cut -d'-' -f2 | tr -d './');
+do
+	echo "$i"
+done

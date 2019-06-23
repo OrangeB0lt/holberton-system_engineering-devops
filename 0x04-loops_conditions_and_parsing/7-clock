@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Script displays time from a clock
+Hr=0
+Mn=1
+while [ $Hr -le 12 ];
+do
+	echo "Hour: $Hr"
+	(( Mn = 1 ))
+
+	while [ $Mn -le 59 ];
+	do
+		echo "$Mn"
+		(( Mn++))
+	done
+	(( Hr++ ))
+done
