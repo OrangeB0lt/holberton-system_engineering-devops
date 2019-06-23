@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#script prints Holberton School 10 times, 2 other things
+i=1
+while [ $i -lt 11 ];
+do
+	if (( i == 4 )); then
+	      	echo "bad luck"
+	elif (( i == 8 )); then
+	     	echo "good luck"
+	else
+		echo "Holberton School"
+	fi
+	(( i++ ))
+done
