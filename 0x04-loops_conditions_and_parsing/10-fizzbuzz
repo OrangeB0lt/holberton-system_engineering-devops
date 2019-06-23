@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# fizzbuzz
+FizzBuzz=(q Fizz Buzz FizzBuzz)
+for ((i=1;i<=100;i++));
+do  (( n=(i % 3 == 0) + (2 * (i % 5 == 0)) ))
+
+       	if (( n == 0 ));
+       	then
+	    echo "$i"
+	else
+	    echo ${FizzBuzz[$n]}
+
+	fi
+done
