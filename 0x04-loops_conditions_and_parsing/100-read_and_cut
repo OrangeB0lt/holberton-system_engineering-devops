@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# read passwd file and filters content
+while read PASS;
+do
+	echo "$PASS" | cut -d':' -f1,3,6
+done < /etc/passwd
