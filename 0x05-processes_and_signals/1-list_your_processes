@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# shows processes currently running
+ps afux

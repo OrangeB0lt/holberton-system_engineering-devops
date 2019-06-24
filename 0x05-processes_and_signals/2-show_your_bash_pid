@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# prints word containing pash
+#shellcheck disable=5C2009
+ps afux | grep -e 'bash'

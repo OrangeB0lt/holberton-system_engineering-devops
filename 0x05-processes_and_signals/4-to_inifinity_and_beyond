@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# prints infinite loop (don't run)
+while (( 1 == 1 ));
+do
+	echo "To infinity and beyond"
+	sleep 2
+
+done
