@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Creates file with it's PID, handles sigs
+NAME="/var/run/holbertonpids.pid"
+sudo touch $NAME
+echo $$ > $NAME
+i=1
+while [ $i -eq 1 ];
+do
+	trap 'sudo rm $NAME' SIGQUIT
+	trap 'echo "I hate the kill command"; sudo rm $NAME' SIGTERM
+	trap 'echo "Y U no love me?!"' SIGINT
+	echo "To infinity and beyond"
+	sleep 2
+done
