@@ -1,0 +1,2 @@
+# config for ssh_config
+PasswordAuthentication no

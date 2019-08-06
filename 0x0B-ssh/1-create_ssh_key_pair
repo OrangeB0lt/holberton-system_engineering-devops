@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# makes new key pair with states bytes, file, and passphrase
+ssh-keygen -b 4096 -f holberton -N testingpass
