@@ -1,4 +1,4 @@
-#!/usr/bin/evn bash
+#!/usr/bin/env bash
 # configures new nginc server on ubuntu, creates .html, and tests it
 apt-get update
 apt-get -y install nginx
