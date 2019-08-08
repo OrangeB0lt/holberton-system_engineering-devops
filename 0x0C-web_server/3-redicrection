@@ -2,5 +2,5 @@
 # sets up a new nginx server on ubuntu with a redirect
 apt-get update
 apt-get -y install nginx
-sed -i '46 i \\trewrite ^/redirect_me http://www.ratwithwings.com permanent;' /etc/nginx/sites-available/default
+sed -i '46 i \\return ^/redirect_me http://www.ratwithwings.com permanent;' /etc/nginx/sites-available/default
 service nginx restart
