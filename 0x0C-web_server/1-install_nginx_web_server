@@ -1,0 +1,7 @@
+#!/user/bin/evn bash
+# configures new nginc server on ubuntu, creates .html, and tests it
+apt-get update
+apt-get -y install nginx
+mv /usr/share/nginx/html/index/html /usr/share/nginx/html/index.html.backup
+echo "Hello Holberton School this server is coooool!" > /usr/share/nginx/html/index.html
+service nginx restart
