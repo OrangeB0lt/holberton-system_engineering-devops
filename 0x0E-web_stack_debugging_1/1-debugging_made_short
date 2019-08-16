@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# debug NGINC server, removes nginx.pid file
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
+rm /run/nginx.pid

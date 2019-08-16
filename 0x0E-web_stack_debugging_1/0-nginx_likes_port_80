@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# debugs NGINX server in docker container
+sed -i "21s/.*/\tlisten 80 default_server;/" /etc/nginx/sites-enabled/default
+sed -i "22s/.*/\tlisten [::]:80 default_server ipv6only=on;/" /etc/nginx/sites-enabled/default
+service nginx start
