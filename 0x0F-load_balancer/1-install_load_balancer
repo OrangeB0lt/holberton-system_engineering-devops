@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 # configs a server with HAProxy load balancer
-echo deb http://archive.ubuntu.com/ubuntu trusty-backports main universe | \
-      tee /etc/apt/sources.list.d/backports.list
+echo deb http://archive.ubuntu.com/ubuntu trust -backports main universe | tee /etc/apt/sources.list.d/backports.list
 apt-get update
 apt-get install -y haproxy -t trusty-backports
 cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
 sed -i "6 i \\\nENABLED=1\n" /etc/default/haproxy
-sed -i "\$a\
-listen backend *:80\n\
-\tmode http\n\tbalance roundrobin\n\
-\tserver 667-web-01 35.196.166.174 check\n\
-\tserver 667-web-02 34.74.134.64:80 check\n" \
-/etc/haproxy/haproxy.cfg
+sed -i "\$a\listen backend *:80\n\\tmode http\n\tbalance roundrobin\n\\tserver 667-web-01 35.196.166.174 check\n\\tserver 667-web-02 34.74.134.64:80 check\n" /etc/haproxy/haproxy.cfg
 sudo service haproxy start
