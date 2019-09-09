@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # configures nginx server with new header variable
 # shellcheck disable=SC2154
-apt-get update
+apt-get -y update
 apt-get -y install nginx
-sed -i "30 i \\\n\tadd_header X-Served-By \$HOSTNAME;\n" /etc/nginx/sites-available/default
+sed -i "26i add_header X-Served-By \$hostname;" /etc/nginx/nginx.conf
 service nginx restart
