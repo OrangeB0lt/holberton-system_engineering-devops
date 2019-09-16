@@ -25,8 +25,8 @@ if __name__ == '__main__':
         if task.get('completed') is True:
             doneTasks.append(task)
 
-     print("Employee {} is done with tasks({}/{}):"
+    print("Employee {} is done with tasks({}/{}):"
           .format(employee, len(doneTasks), totalTasks))
 
-     for task in doneTasks:
+    for task in doneTasks:
         print("\t {}".format(task.get('title')))
