@@ -1,30 +1,35 @@
 #!/usr/bin/python3
 '''
-Pings To-Do API for data on specified user and saves the data to a CSV file
+script for parsing web data from an api
 '''
-import csv
-import requests
-from sys import argv
+if __name__ == "__main__":
+    import json
+    import requests
+    import sys
+    rootURL = 'https://jsonplaceholder.typicode.com/'
+    try:
+        employee_id = sys.argv[1]
+    except:
+        print('Usage: {} employee_id'.format(sys.argv[0]))
+        exit(1)
 
+    # grab info abt the user
+    url = rootURL + 'users?id={}'.format(employee_id)
+    response = requests.get(url)
+    user = json.loads(response.text)
+    user_name = user[0].get('username')
 
-if __name__ == '__main__':
-    employee_id = argv[1]
-    urlTodo = 'https://jsonplaceholder.typicode.com/todos/'
-    urlUser = 'https://jsonplaceholder.typicode.com/users/'
-    todo = requests.get(urlTodo, params={'userId': employee_id})
-    user = requests.get(urlUser, params={'id': employee_id})
-
-    todoDictList = todo.json()
-    userDictList = user.json()
-
-    employee = userDictList[0].get('username')
-
-    with open("{}.csv".format(employee_id), "a+") as csvfile:
-        csvwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-        for task in todoDictList:
-            status = task['completed']
-            title = task['title']
-            csvwriter.writerow(["{}".format(employee_id),
-                                "{}".format(employee),
-                                "{}".format(status),
-                                "{}".format(title)])
+    # grab info abt the user's tasks
+    url = rootURL + 'todos?userId={}'.format(employee_id)
+    response = requests.get(url)
+    objs = json.loads(response.text)
+    constructor = ""
+    for obj in objs:
+            constructor += '"{}","{}","{}","{}"\n'.format(
+                employee_id,
+                user_name,
+                obj.get('completed'),
+                obj.get('title')
+            )
+    with open('{}.csv'.format(employee_id), 'w') as myFile:
+        myFile.write(constructor)
