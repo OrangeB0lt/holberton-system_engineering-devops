@@ -1,37 +1,38 @@
 #!/usr/bin/python3
-"""
+'''
 Pings a To-Do API for data for all users and writes it to a JSON file
-"""
-import csv
-import json
-import requests
+'''
+if __name__ == "__main__":
+    import json
+    import requests
+    import sys
+    rootURL = 'https://jsonplaceholder.typicode.com/'
 
+    # grab info about all users
+    url = rootURL + 'users'
+    response = requests.get(url)
+    users = json.loads(response.text)
 
-if __name__ == '__main__':
-    employee_id = 1
-    userTasks = {}
-    urlTodo = 'https://jsonplaceholder.typicode.com/todos/'
-    urlUser = 'https://jsonplaceholder.typicode.com/users/'
-    users = requests.get(urlUser).json()
+    # grab the info about the users' tasks
+    constructor = {}
+    for user in users:
+        employee_id = user.get('id')
+        user_id_key = str(employee_id)
+        username = user.get('username')
+        constructor[user_id_key] = []
+        url = rootURL + 'todos?userId={}'.format(employee_id)
 
-    for employee_id in range(1, len(users) + 1):
-        todo = requests.get(urlTodo, params={'userId': employee_id})
-        user = requests.get(urlUser, params={'id': employee_id})
+        response = requests.get(url)
+        objs = json.loads(response.text)
+        for obj in objs:
+                json_data = {
+                    "task": obj.get('title'),
+                    "completed": obj.get('completed'),
+                    "username": username
+                }
+                constructor[user_id_key].append(json_data)
 
-        todoDictList = todo.json()
-        userDictList = user.json()
-        taskList = []
-        employee = userDictList[0].get('username')
-
-        for task in todoDictList:
-            status = task.get('completed')
-            title = task.get('title')
-            taskDict = {}
-            taskDict['task'] = title
-            taskDict['completed'] = status
-            taskDict['username'] = employee
-            taskList.append(taskDict)
-        userTasks[employee_id] = taskList
-
-    with open("todo_all_employees.json", "w+") as jsonfile:
-        json.dump(userTasks, jsonfile)
+    # write the data to the file
+    json_encoded_data = json.dumps(constructor)
+    with open('todo_all_employees.json', 'w') as myFile:
+        myFile.write(json_encoded_data)
