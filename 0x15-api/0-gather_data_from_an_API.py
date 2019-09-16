@@ -1,35 +1,37 @@
 #!/usr/bin/python3
 '''
-Uses https://jsonplaceholder.typicode.com/ REST API, for a given
-employee ID, returns info on their TODO list prog
+script for parsing web data from an api
 '''
-import requests
-import sys
+if __name__ == "__main__":
+    import json
+    import requests
+    import sys
+    rootURL = 'https://jsonplaceholder.typicode.com/'
+    try:
+        employee_id = sys.argv[1]
+    except:
+        print('Usage: {} employee_id'.format(sys.argv[0]))
+        exit(1)
 
+    # grab user info
+    url = rootURL + 'users?id={}'.format(employee_id)
+    response = requests.get(url)
+    user = json.loads(response.text)
+    name = user[0].get('name')
 
+    # grab user's tasks info
+    url = rootURL + 'todos?userId={}'.format(employee_id)
+    response = requests.get(url)
+    objs = json.loads(response.text)
+    completed = 0
+    compTasks = []
+    for obj in objs:
+        if obj.get('completed'):
+            compTasks.append(obj)
+            completed += 1
 
-def makeRequest(data, num):
-    ''' makes employee request and returns json dict response '''
-    rootURL = 'https://jsonplaceholder.typicode.com'
-    url = '{}{}{}'.format(rootURL, data, num)
-    return requests.get(url).json()
-
-
-def application(num):
-    ''' makes request for info about employee todo list, then prints '''
-    employee = makeRequest('/users/', num)
-    todos = makeRequest('/todos/?userId=', num)
-    completed = [i.get('title') for i in todos if i.get('completed')]
-    total = len(todos)
-    print('Employee {} is done with tasks({}/{}):'.format(
-        employee.get('name'), len(completed), total))
-    for i in completed:
-        print('\t {}'.format(i))
-
-
-if __name__ == '__main__':
-    """
-    MAIN App
-    """
-    if len(sys.argv) > 1 and sys.argv[1].isdigit():
-        application(sys.argv[1])
+    # print output user's task completion
+    print("Employee {} is done with tasks({}/{}):".format(name, completed, len(objs)))
+    # print output title of completed tasks
+    for task in compTasks:
+        print("\t {}".format(task.get('title')))
