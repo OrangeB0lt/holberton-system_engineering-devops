@@ -26,7 +26,7 @@ if __name__ == "__main__":
         objs = json.loads(response.text)
         for obj in objs:
                 json_data = {
-                    "username": username
+                    "username": username,
                     "task": obj.get('title'),
                     "completed": obj.get('completed'),
                 }
