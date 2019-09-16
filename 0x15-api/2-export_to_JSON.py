@@ -2,35 +2,36 @@
 '''
 Pings a To-Do API for data for a specified user and writes it to a JSON file
 '''
-import csv
-import json
-import requests
-from sys import argv
+if __name__ == "__main__":
+    import json
+    import requests
+    import sys
+    rootURL = 'https://jsonplaceholder.typicode.com/'
+    try:
+        employee_id = sys.argv[1]
+    except:
+        print('Usage: {} employee_id'.format(sys.argv[0]))
+        exit(1)
 
+    # grab the info about the user
+    url = rootURL + 'users?id={}'.format(employee_id)
+    response = requests.get(url)
+    user = json.loads(response.text)
+    userName = user[0].get('username')
 
-if __name__ == '__main__':
-    employee_id = argv[1]
-    urlTodo = 'https://jsonplaceholder.typicode.com/todos/'
-    urlUser = 'https://jsonplaceholder.typicode.com/users/'
-    todo = requests.get(urlTodo, params={'userId': employee_id})
-    user = requests.get(urlUser, params={'id': employee_id})
-
-    todoDictList = todo.json()
-    userDictList = user.json()
-    taskList = []
-    userTasks = {}
-    employee = user_dict_list[0].get('username')
-
-    with open("{}.json".format(employee_id), "w+") as jsonfile:
-        for task in todoDictList:
-            status = task.get('completed')
-            title = task.get('title')
-            taskDict = {}
-            taskDict['task'] = title
-            taskDict['completed'] = status
-            taskDict['username'] = employee
-            taskList.append(taskDict)
-        userTasks[employee_id] = taskList
-
-        data = json.dumps(userTasks)
-        jsonfile.write(data)
+    # grab the info about the user's tasks
+    url = rootURL + 'todos?userId={}'.format(employee_id)
+    response = requests.get(url)
+    objs = json.loads(response.text)
+    user_id_key = str(employee_id)
+    constructor = {user_id_key: []}
+    for obj in objs:
+            json_data = {
+                "task": obj.get('title'),
+                "completed": obj.get('completed'),
+                "username": userName
+            }
+            constructor[user_id_key].append(json_data)
+    json_encoded_data = json.dumps(constructor)
+    with open('{}.json'.format(employee_id), 'w') as myFile:
+        myFile.write(json_encoded_data)
