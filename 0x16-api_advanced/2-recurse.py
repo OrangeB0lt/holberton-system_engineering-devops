@@ -33,6 +33,7 @@ def titles(hot_list, child):
         hot_list.append(title)
     return hot_list
 
+
 def recurse(subreddit, hot_list=[], after=None):
     ''' returns the top ten hot posts for subreddit '''
     response = getRequest(subreddit, after, hot_list)
