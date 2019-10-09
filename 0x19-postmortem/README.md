@@ -44,7 +44,7 @@ Action items:
 
 ## Supporting information
 
-No supporting information at this time
+No support, like bad underwear.
 
 
 
